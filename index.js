@@ -1,36 +1,17 @@
-require('dotenv').config();
-const express = require('express');
-const { Client, middleware } = require('@line/bot-sdk');
-const axios = require('axios');
-
-const app = express();
-const config = {
-  channelAccessToken: process.env.LINE_ACCESS_TOKEN,
-  channelSecret: process.env.LINE_CHANNEL_SECRET,
-};
-const client = new Client(config);
-app.use(express.json());
-
-app.post('/webhook', middleware(config), async (req, res) => {
-  const events = req.body.events;
-  const results = await Promise.all(events.map(handleEvent));
-  res.json(results);
-});
-
 async function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') return;
 
   const userInput = event.message.text;
   const userId = event.source.userId;
 
-  // 🔍 Authorizationヘッダーをログに出力
+  // Authorizationヘッダーの中身をログ出力（デバッグ用）
   console.log('🚨 Authorization header being sent:', `Bearer 
 ${process.env.DIFY_API_KEY}`);
 
   const response = await 
 axios.post('https://api.dify.ai/v1/chat-messages', {
-    inputs: {},
-    query: userInput
+    inputs: { user_input: userInput },
+    user: userId
   }, {
     headers: {
       Authorization: `Bearer ${process.env.DIFY_API_KEY}`,
