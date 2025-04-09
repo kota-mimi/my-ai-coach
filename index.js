@@ -23,12 +23,10 @@ async function handleEvent(event) {
   const userInput = event.message.text;
   const userId = event.source.userId;
 
-  console.log('🚨 Authorization raw env:', process.env.DIFY_API_KEY);
-  console.log('🚨 Authorization header being sent:', `Bearer 
-${process.env.DIFY_API_KEY}`);
+  console.log('💥 DIFY_API_KEY raw:', process.env.DIFY_API_KEY);
+  console.log('💥 Authorization Header:', `Bearer ${process.env.DIFY_API_KEY}`);
 
-  const response = await 
-axios.post('https://api.dify.ai/v1/chat-messages', {
+  const response = await axios.post('https://api.dify.ai/v1/chat-messages', {
     inputs: { user_input: userInput },
     user: userId
   }, {
@@ -46,9 +44,4 @@ axios.post('https://api.dify.ai/v1/chat-messages', {
     text: replyText
   });
 }
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log('🚀 サーバー起動中（ポート3000）');
-});
 
