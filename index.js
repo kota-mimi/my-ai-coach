@@ -45,3 +45,8 @@ async function handleEvent(event) {
   });
 }
 
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`🚀 サーバー起動中（ポート${port}）`);
+});
+
