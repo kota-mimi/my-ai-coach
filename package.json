@@ -8,11 +8,19 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "@line/bot-sdk": "^9.8.0",
     "axios": "^1.8.4",
     "dotenv": "^16.4.7",
     "express": "^5.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kota-mimi/my-ai-coach.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kota-mimi/my-ai-coach/issues"
+  },
+  "homepage": "https://github.com/kota-mimi/my-ai-coach#readme",
+  "description": ""
 }
