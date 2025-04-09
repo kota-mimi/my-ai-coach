@@ -12,9 +12,8 @@ const config = {
 
 const client = new Client(config);
 
-// 🔧 修正済み！middlewareの後にexpress.json()を追加！
-app.post('/webhook', middleware(config), express.json(), async (req, res) 
-=> {
+// 🔧 middlewareとexpress.json()を両方入れる
+app.post('/webhook', middleware(config), express.json(), async (req, res) => {
   const events = req.body.events;
   const results = await Promise.all(events.map(handleEvent));
   res.json(results);
@@ -26,13 +25,11 @@ async function handleEvent(event) {
   const userInput = event.message.text;
   const userId = event.source.userId;
 
-  // 🔍 確認ログ
+  // 🔍 デバッグログ
   console.log('💥 DIFY_API_KEY raw:', process.env.DIFY_API_KEY);
-  console.log('💥 Authorization Header:', `Bearer 
-${process.env.DIFY_API_KEY}`);
+  console.log('💥 Authorization Header:', `Bearer ${process.env.DIFY_API_KEY}`);
 
-  const response = await 
-axios.post('https://api.dify.ai/v1/chat-messages', {
+  const response = await axios.post('https://api.dify.ai/v1/chat-messages', {
     inputs: { user_input: userInput },
     user: userId
   }, {
@@ -51,7 +48,6 @@ axios.post('https://api.dify.ai/v1/chat-messages', {
   });
 }
 
-// ✅ ポート起動
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`🚀 サーバー起動中（ポート${port}）`);
